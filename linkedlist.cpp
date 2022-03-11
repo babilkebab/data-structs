@@ -139,7 +139,8 @@ class DoublyLinkedList{
             if(ind < len/2){
                 node = head;
                 for(int i = 0; i < ind; i++){
-                    node = node->succ;                    }
+                    node = node->succ;
+                }
             }
             else{
                 node = head->prec;
