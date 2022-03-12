@@ -193,7 +193,6 @@ class DoublyLinkedList{
             if(len == 0){
                 head = node;
                 len++;
-                cout << "zanoSano" << endl;
                 return;
             }
             ind = ind%len;
