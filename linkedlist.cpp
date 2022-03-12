@@ -1,7 +1,5 @@
 #include <iostream>
-#include <string>
 using namespace std;
-
 
 template<typename T>
 class Node{
@@ -46,10 +44,17 @@ class LinkedList{
             loop->succ = nullptr;
         }
 
-        virtual void insert(int pos, T d){
+        LinkedList() : len(0){}
+
+        virtual void insert(T d, int pos = 0){
+            Node<T>* newobj = new Node<T>(d);
+            if(len == 0){
+                head = newobj;
+                len++;
+                return;
+            }
             pos = pos%len;
             Node<T>* node = head;
-            Node<T>* newobj = new Node<T>(d);
             for(int i = 0; i < pos+1; i++){
                 if(i == pos-1){
                     node->succ = newobj;
@@ -99,18 +104,25 @@ class CircularLinkedList : public LinkedList<T>{
             nodo->succ = this->head;
         }
 
-        void insert(int pos, T d) override{
+        CircularLinkedList() : LinkedList<T>(){}
+
+        void insert(T d, int pos = 0) override{
+            Node<T>* newobj = new Node<T>(d);
+            if (this->len == 0){
+                this->head = newobj;
+                this->len++;
+                return;
+            }
             pos = pos%this->len;
             if (pos == 0){
                 Node<T>* nodo = this->accessNode(this->len - 1);
-                Node<T>* newobj = new Node<T>(d);
                 nodo->succ = newobj;
                 newobj->succ = this->head;
                 this->head = newobj;
                 this->len++;
             }
             else{
-                LinkedList<T>::insert(pos, d);
+                LinkedList<T>::insert(d, pos);
             }
         }
 };
@@ -133,13 +145,16 @@ class DoublyLinkedList{
             }
             head->prec = s;
         }
+
+        DoublyLinkedList() : len(0){}
+
         T& accessData(int ind){
             ind = ind%len;
             DoubleNode<T>* node;
-            if(ind < len/2){
+            if(ind <= len/2){
                 node = head;
                 for(int i = 0; i < ind; i++){
-                    node = node->succ;
+                    node = node->succ;                    
                 }
             }
             else{
@@ -173,9 +188,15 @@ class DoublyLinkedList{
             this->accessData(pos) = data;
         }
 
-        void insert(int ind, T d) {
-            ind = ind%len;
+        void insert(T d, int ind = 0) {
             DoubleNode<T>* node = new DoubleNode<T>(d);
+            if(len == 0){
+                head = node;
+                len++;
+                cout << "zanoSano" << endl;
+                return;
+            }
+            ind = ind%len;
             DoubleNode<T>* it;
             if(ind < len/2 && ind != 0 && ind != len){
                 it = head;
@@ -217,22 +238,3 @@ class DoublyLinkedList{
             len++;
         }
 };
-
-
-int main(){
-
-    LinkedList<int> list(5, 10);
-    cout << list.accessData(4) << endl;
-    list.insert(5, 30);
-    cout << list.accessData(5) << endl;
-    CircularLinkedList<int> list2(10, 23);
-    Node<int>* circ = list2.accessNode(9);
-    list2.changeData(0, 500);
-    cout << (circ->succ)->data << endl;
-    DoublyLinkedList<string> list3(7, "Hello");
-    list3.changeData(3, "World");
-    list3.insert(7, "String");
-    list3.insert(7, "Another string");
-    cout << list3.accessData(3) << " " << list3.accessData(7) << " " << list3.accessData(8) << endl;
-
-}
