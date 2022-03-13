@@ -206,7 +206,7 @@ class DoublyLinkedList{
         DoubleNode<T>* accessNode(int ind){
             ind = ind%len;
             DoubleNode<T>* node;
-            if(ind <= len/2){
+            if(ind < len/2){
                 node = head;
                 for(int i = 0; i < ind; i++){
                     node = node->succ;
