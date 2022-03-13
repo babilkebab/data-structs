@@ -65,6 +65,10 @@ class LinkedList{
         }
 
         virtual void erase(int pos){
+            if (len == 0){
+                cout << "Lista vuota!" << endl;
+                return;
+            }
             Node<T>* node = head;
             if (pos == 0){
                 head = node->succ;
@@ -81,6 +85,8 @@ class LinkedList{
         }
 
         T& accessData(int ind){
+            if (len == 0)
+                cout << "Lista vuota!" << endl;
             ind = ind%len;
             Node<T>* node = head;
             for(int i = 0; i < ind; i++){
@@ -90,6 +96,10 @@ class LinkedList{
         }
 
         Node<T>* accessNode(int ind){
+            if (len == 0){
+                cout << "Lista vuota!" << endl;
+                return nullptr;
+            }
             ind = ind%len;
             Node<T>* node = head;
             for(int i = 0; i < ind; i++){
@@ -99,6 +109,10 @@ class LinkedList{
         }
 
         void changeData(int pos, T data){
+            if (len == 0){
+                cout << "Lista vuota!" << endl;
+                return;
+            }
             this->accessData(pos) = data;
         }
 
@@ -138,6 +152,10 @@ class CircularLinkedList : public LinkedList<T>{
             }
         }
         void erase(int pos)override{
+            if (this->len == 0){
+                cout << "Lista vuota!" << endl;
+                return;
+            }
             pos = pos%this->len;
             Node<T>* node = this->head;
             if(pos == 0){
@@ -186,6 +204,8 @@ class DoublyLinkedList{
         DoublyLinkedList() : len(0){}
 
         T& accessData(int ind){
+            if (len == 0)
+                cout << "Lista vuota!" << endl;
             ind = ind%len;
             DoubleNode<T>* node;
             if(ind <= len/2){
@@ -204,6 +224,10 @@ class DoublyLinkedList{
         }
 
         DoubleNode<T>* accessNode(int ind){
+            if (len == 0){
+                cout << "Lista vuota!" << endl;
+                return nullptr;
+            }
             ind = ind%len;
             DoubleNode<T>* node;
             if(ind < len/2){
@@ -260,6 +284,10 @@ class DoublyLinkedList{
         }
 
         void erase(int ind){
+            if (len == 0){
+                cout << "Lista vuota!" << endl;
+                return;
+            }
             ind = ind%len;
             DoubleNode<T>* node;
             if(ind == 0){
