@@ -1,6 +1,3 @@
-#include <iostream>
-using namespace std;
-
 template<typename T>
 class Node{
     public:
@@ -53,22 +50,34 @@ class LinkedList{
                 len++;
                 return;
             }
-            pos = pos%len;
-            Node<T>* node = head;
-            for(int i = 0; i < pos+1; i++){
-                if(i == pos-1){
-                    node->succ = newobj;
-                    continue;
-                }
-                if (pos == 0){
-                    newobj->succ = this->head;
-                    this->head = newobj;
-                    return;
-                } 
-                node = node->succ;
+            pos = pos%(len+1);
+            if (pos == 0){
+                newobj->succ = this->head;
+                this->head = newobj;
+                this->len++;
+                return;
             }
-            newobj->succ = node;
+            Node<T>* node = this->accessNode(pos-1);
+            if(pos != len)
+                newobj->succ = node->succ;
+            node->succ = newobj;
             this->len++;
+        }
+
+        virtual void erase(int pos){
+            Node<T>* node = head;
+            if (pos == 0){
+                head = node->succ;
+                delete node;
+                len--;
+                return;
+            } 
+            pos = pos%len;
+            Node<T>* erasable = this->accessNode(pos);
+            node = this->accessNode(pos-1);
+            node->succ = this->accessNode(pos+1);
+            delete erasable;
+            len--;
         }
 
         T& accessData(int ind){
@@ -113,7 +122,7 @@ class CircularLinkedList : public LinkedList<T>{
                 this->len++;
                 return;
             }
-            pos = pos%this->len;
+            pos = pos%(this->len+1);
             if (pos == 0){
                 Node<T>* nodo = this->accessNode(this->len - 1);
                 nodo->succ = newobj;
@@ -123,7 +132,35 @@ class CircularLinkedList : public LinkedList<T>{
             }
             else{
                 LinkedList<T>::insert(d, pos);
+                delete newobj;
+                Node<T>* nodo = this->accessNode(this->len-1);
+                nodo->succ = this->head;
             }
+        }
+        void erase(int pos)override{
+            pos = pos%this->len;
+            Node<T>* node = this->head;
+            if(pos == 0){
+                Node<T>* newhead = node->succ;
+                node = this->accessNode(this->len-1);
+                node->succ = newhead;
+                node = this->head;
+                delete node;
+                this->head = newhead;
+                return;
+            }
+            if (pos == this->len-1){
+                node = this->accessNode(this->len-2);
+                delete node->succ;
+                node->succ = this->head;
+            }
+            else{
+                node = this->accessNode(pos-1);
+                node->succ = (node->succ)->succ;
+                node = node->succ;
+                delete node;
+            }
+            this->len--;
         }
 };
 
@@ -169,7 +206,7 @@ class DoublyLinkedList{
         DoubleNode<T>* accessNode(int ind){
             ind = ind%len;
             DoubleNode<T>* node;
-            if(ind < len/2){
+            if(ind <= len/2){
                 node = head;
                 for(int i = 0; i < ind; i++){
                     node = node->succ;
@@ -195,31 +232,9 @@ class DoublyLinkedList{
                 len++;
                 return;
             }
-            ind = ind%len;
+            ind = ind%(len+1);
             DoubleNode<T>* it;
-            if(ind < len/2 && ind != 0 && ind != len){
-                it = head;
-                for(int i = 0; i < ind; i++){
-                    it = it->succ;
-                }
-                DoubleNode<T>* temp = it->succ;
-                it->succ = node;
-                node->prec = it;
-                node->succ = temp;
-                temp->prec = node;
-            }
-            else if (ind >= len/2 && ind != 0 && ind != len){
-                it = head->prec;
-                for(int i = len-1; i > ind; i--){
-                    it = it->prec;
-                }
-                DoubleNode<T>* temp = it->prec;
-                it->prec = node;
-                node->prec = temp;
-                node->succ = it;
-                temp->succ = node;
-            }
-            else if(ind == 0){
+            if(ind == 0){
                 it = head;
                 it->prec->succ = node;
                 node->prec = it->prec;
@@ -234,6 +249,41 @@ class DoublyLinkedList{
                 node->succ = head;
                 head->prec = node;               
             }
+            else{
+                it = this->accessNode(ind-1);
+                node->succ = this->accessNode(ind);
+                it->succ = node;
+                node->prec = it;
+                node->succ->prec = node;
+            }
             len++;
+        }
+
+        void erase(int ind){
+            ind = ind%len;
+            DoubleNode<T>* node;
+            if(ind == 0){
+                node = head;
+                node->prec->succ = node->succ;
+                node->succ->prec = node->prec;
+                head = node->succ;
+                delete node;
+                len--;
+                return;
+            }
+            if(ind == len-1){
+                node = head->prec;
+                (node->prec)->succ = head;
+                head->prec = node->prec;
+                delete node;
+                len--;
+                return;
+
+            }
+            node = this->accessNode(ind);
+            (node->prec)->succ = node->succ;
+            (node->succ)->prec = node->prec;
+            delete node;
+            len--;
         }
 };
