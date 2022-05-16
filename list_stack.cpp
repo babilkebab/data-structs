@@ -6,7 +6,7 @@ using namespace std;
 template <typename T>
 class ListStack{
     list<T>* liststk;
-    //liststk.front() for SP (this is a ref)
+    //liststk.front() for SP (returns a ref)
     public:
         ListStack(){
             liststk = new list<T>;
