@@ -52,26 +52,3 @@ class circularQueue{
         }
 
 };
-
-
-
-int main(){
-    /*
-    circularQueue<int> queue1(5);
-    queue1.enqueue(1);
-    queue1.enqueue(2);
-    queue1.enqueue(3);
-    queue1.enqueue(4);
-    queue1.enqueue(5);
-    queue1.dequeue();
-    queue1.dequeue();
-    queue1.enqueue(3);
-    queue1.enqueue(4);
-    queue1.dequeue();
-    queue1.dequeue();
-    queue1.dequeue();
-    queue1.dequeue();
-    queue1.dequeue();
-    queue1.dequeue();
-    */
-}
