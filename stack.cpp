@@ -8,6 +8,10 @@ class Stack{
             st = new T[len];
             ptr = -1;
         }
+    
+        ~Stack(){
+            delete [] st;
+        }
 
         void push(T data){
             if(ptr == len-1){
