@@ -28,14 +28,14 @@ class ListStack{
             }
             else
                 cout << "Empty stack!" << endl;
-                return;
+                exit(-1);
         }
 
         T getTop(){
             if(liststk->front())
                 return liststk->front();
             cout << "Empty stack!" << endl;
-            return;
+            exit(-1);
         }
 
 };
