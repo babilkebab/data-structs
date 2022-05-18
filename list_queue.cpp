@@ -29,15 +29,3 @@ class ListQueue{
             return lst->front();
         }
 };
-
-
-
-int main(){
-    ListQueue<int> queue;
-    queue.enqueue(100);
-    queue.enqueue(200);
-    queue.enqueue(300);
-    queue.enqueue(400);
-    queue.dequeue();
-    cout << queue.front() << endl; //200
-}
