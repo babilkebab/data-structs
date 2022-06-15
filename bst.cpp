@@ -44,15 +44,19 @@ class BST{
     }
 
     void preorder(BSTNode<T>* root){
-        cout << root->data << " ";
-        preorder(root->l);
-        preorder(root->r); 
+        if(root != nullptr){
+            cout << root->data << " ";
+            preorder(root->l);
+            preorder(root->r); 
+        }
     }
 
     void postorder(BSTNode<T>* root){
-        postorder(root->l);
-        postorder(root->r);
-        cout << root->data << " ";
+        if(root != nullptr){
+            postorder(root->l);
+            postorder(root->r);
+            cout << root->data << " ";
+        }
     }
 
     void levelorder(BSTNode<T>* rt, int level){  
@@ -213,7 +217,7 @@ public:
             BSTNode<T>* succ = successor(del_node); //replace delnode with his successor
             cout << succ->data << endl;
             if(succ != del_node->r){ // if successor isn't delnode's son(succ is in right subtree)
-                transplant(succ, succ->l); //successor is replaced with his right subtree (successor hasn't left subtree, because it's successor)
+                transplant(succ, succ->r); //successor is replaced with his right subtree (successor hasn't left subtree, because it's successor)
                 succ->father = del_node->father; //new succ's father is delnode's father
                 succ->r->father = succ; //and delnode's right subtree is now succ's right subtree
 
