@@ -1,8 +1,5 @@
 //LISTE DI ADIACENZA
 
-#include <iostream>
-using namespace std;
-
 template<typename T>
 class Node{
 public:
@@ -128,10 +125,6 @@ public:
 
 };
 
-
-
-
-
 int main(){
     ListGraph<int> lg1;
     lg1.insertNode(1);
@@ -147,6 +140,4 @@ int main(){
     lg1.connectNode(lg1.searchNode(4), lg1.searchNode(2));
     lg1.connectNode(lg1.searchNode(6), lg1.searchNode(4));
     cout << lg1 << endl;
-
-
 }
