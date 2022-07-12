@@ -1039,6 +1039,7 @@ public:
             succ->sx = nodetodel->sx;
             succ->sx->dad = succ;
         }
+        delete nodetodel;
     }
 
 };
