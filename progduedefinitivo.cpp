@@ -832,14 +832,14 @@ class BST{
 
     BSTNode<T>* minimo(BSTNode<T>* rt){
         BSTNode<T>* iter = rt;
-        while(iter->sx != nullptr || iter->dx != nullptr)
+        while(iter->sx != nullptr)
             iter = iter->sx;
         return iter;
     }
 
     BSTNode<T>* massimo(BSTNode<T>* rt){
         BSTNode<T>* iter = rt;
-        while(iter->dx != nullptr || iter->dx != nullptr)
+        while(iter->dx != nullptr)
             iter = iter->dx;
         return iter;
     }
