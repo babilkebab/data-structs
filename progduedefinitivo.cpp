@@ -917,7 +917,7 @@ class BST{
                 return sxh+1;
             return dxh+1;
         }
-        return -1;
+        return 0;
     }
 
 public:
